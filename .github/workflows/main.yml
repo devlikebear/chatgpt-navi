@@ -6,28 +6,32 @@ on:
       - main
 
 jobs:
-  create_release:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create Release
+      - name: Set up Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Create tag
+        id: create_tag
+        run: |
+          TAG=$(date '+%Y%m%d-%H%M%S')
+          git tag -a $TAG -m "Automated release $TAG"
+          echo "::set-output name=tag::$TAG"
+
+      - name: Create release
         uses: actions/create-release@v1
-        with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.0
-          body: |
-            Changes in this release:
-            - Add new feature
-            - Fix bug
-          draft: false
-          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Extension
-        uses: actions/upload-artifact@v2
         with:
-          name: release
-          path: .
+          tag_name: ${{ steps.create_tag.outputs.tag }}
+          release_name: Release ${{ steps.create_tag.outputs.tag }}
+          body: Automated release created by GitHub Actions
+          draft: false
+          prerelease: false
