@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/uicons-solid-straight/css/uicons-solid-straight.css"
+    />
+
+    <style>
+      body {
+        min-width: 800px;
+        text-align: left;
+      }
+
+      .question {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .answer {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        font-size: 1rem;
+        font-weight: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <h1>ChatGPT Navi</h1>
+      <button id="saveChatLogs">Save Chat Log</button>
+      <div id="results"></div>
+
+      <div id="attribution">
+        <a
+          href="https://www.flaticon.com/free-icons/toolbox"
+          title="toolbox icons"
+          >Toolbox icons created by Smashicons - Flaticon</a
+        >
+      </div>
+    </main>
+    <script src="turndown.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
