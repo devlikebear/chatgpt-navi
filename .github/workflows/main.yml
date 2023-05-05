@@ -1,4 +1,4 @@
-name: Release Extension
+name: Create Release
 
 on:
   push:
@@ -6,19 +6,17 @@ on:
       - main
 
 jobs:
-  build:
+  create_release:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create release
-        uses: softprops/action-gh-release@v1
+      - name: Create Release
+        uses: actions/create-release@v1
         with:
-          files: ./*.zip
-          tag_name: v${{ github.ref }}
-          title: Release ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           body: |
             Changes in this release:
             - Add new feature
@@ -27,3 +25,9 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Extension
+        uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: .
